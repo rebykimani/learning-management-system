@@ -1,23 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import SignUp from "./SignUp.js";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Hello from "./Hello";
+import Login from "./Login";
+import Home from "./Components/Home";
+// import SidebarConfig from "./Layouts/Dashboard/sidebar";
 
 function App() {
+  const [storedToken, setStoredToken] = useState(localStorage.getItem("token"));
+  useEffect(() => {
+    console.log(storedToken);
+  }, [storedToken]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <Routes>
+          {storedToken && storedToken !== "null" ? (
+            <div>
+              <Route
+                path="/"
+                element={<Hello setStoredToken={setStoredToken} />}
+              />
+              {/* <Route path="/Dashboard" element={<SidebarConfig />} /> */}
+            </div>
+          ) : (
+            <Route
+              path="/"
+              element={<Home setStoredToken={setStoredToken} />}
+            />
+          )}
+          <Route
+            path="/login"
+            element={<Login setStoredToken={setStoredToken} />}
+          />
+          <Route
+            path="/signup"
+            element={<SignUp setStoredToken={setStoredToken} />}
+          />
+        </Routes>
+      </Router>
     </div>
   );
 }
