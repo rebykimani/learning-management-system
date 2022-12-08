@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import Navbar from "./Navbar";
 import { fontSize } from "@mui/system";
-import logo from "../Assets/logo.jpg";
+import logo from "../Components/Logo";
 
 const Home = ({ setStoredToken }) => {
   return (
